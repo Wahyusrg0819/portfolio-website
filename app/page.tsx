@@ -15,7 +15,6 @@ import {
   FaReact,
   FaNodeJs,
   FaServer,
-  FaCode,
   FaDatabase,
   FaShieldAlt,
   FaNetworkWired,
@@ -23,15 +22,28 @@ import {
 } from "react-icons/fa";
 import { 
   SiVuedotjs,
-  SiVite,
   SiFirebase,
   SiTypescript,
-  SiMysql,
-  SiMongodb,
   SiNpm
 } from "react-icons/si";
 
-const SkillCard = ({ skill }: { skill: any }) => {
+interface Skill {
+  name: string;
+  icon: React.ReactNode;
+  description: string;
+  level?: number;
+  bgColor: string;
+  barColor?: string;
+}
+
+interface SecurityTool {
+  name: string;
+  icon: React.ReactNode;
+  description: string;
+  bgColor: string;
+}
+
+const SkillCard = ({ skill }: { skill: Skill }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -69,7 +81,7 @@ const SkillCard = ({ skill }: { skill: any }) => {
   );
 };
 
-const SecurityToolCard = ({ tool }: { tool: any }) => {
+const SecurityToolCard = ({ tool }: { tool: SecurityTool }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -89,7 +101,7 @@ const SecurityToolCard = ({ tool }: { tool: any }) => {
   );
 };
 
-const skills = [
+const skills: Skill[] = [
   {
     name: "React & React Native",
     icon: <FaReact className="w-16 h-16 text-[#61DAFB] group-hover:text-[#00D8FF] transition-colors duration-300" />,
@@ -156,7 +168,7 @@ const skills = [
   }
 ];
 
-const securityTools = [
+const securityTools: SecurityTool[] = [
   {
     name: "Penetration Testing",
     icon: <FaShieldAlt className="w-14 h-14 text-red-500 group-hover:text-red-600 transition-colors duration-300 relative z-10" />,

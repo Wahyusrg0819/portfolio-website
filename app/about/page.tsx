@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, LazyMotion, domAnimation } from "framer-motion";
-import { FaCode, FaDatabase, FaServer, FaMobile, FaGraduationCap, FaBriefcase, FaAward, FaCertificate, FaReact } from "react-icons/fa";
+import { FaCode, FaDatabase, FaServer, FaMobile, FaGraduationCap, FaBriefcase } from "react-icons/fa";
 import { SiVuedotjs } from "react-icons/si";
 import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
@@ -280,27 +280,4 @@ const stats = [
     iconColor: "text-accent-teal",
     textColor: "text-accent-teal"
   }
-];
-
-const technicalSkills = [
-  {
-    title: "Frontend",
-    icon: FaCode,
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-  },
-  {
-    title: "Backend",
-    icon: FaServer,
-    skills: ["Node.js", "Express", "Python", "Java"],
-  },
-  {
-    title: "Database",
-    icon: FaDatabase,
-    skills: ["PostgreSQL", "MongoDB", "Redis", "MySQL"],
-  },
-  {
-    title: "Mobile & Others",
-    icon: FaMobile,
-    skills: ["React Native", "Git", "Docker", "AWS"],
-  },
 ]; 

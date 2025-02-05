@@ -1,13 +1,31 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
 import { useCallback } from "react";
+
+interface Project {
+  title: string;
+  description: string;
+  longDescription: string;
+  image: string;
+  github?: string;
+  live?: string;
+  tech: string[];
+  features: string[];
+  gradient: string;
+  hoverGradient: string;
+  textGradient: string;
+}
+
+interface ProjectCardProps {
+  project: Project;
+  index: number;
+}
 
 const projects = [
   {
@@ -137,7 +155,7 @@ export default function Projects() {
   );
 }
 
-const ProjectCard = ({ project, index }: { project: any; index: number }) => (
+const ProjectCard = ({ project, index }: ProjectCardProps) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
