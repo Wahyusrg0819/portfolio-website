@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaCode, FaDatabase, FaServer, FaMobile, FaGraduationCap, FaBriefcase } from "react-icons/fa";
+import { FaReact } from "react-icons/fa6";
 import { SiVuedotjs } from "react-icons/si";
 import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
