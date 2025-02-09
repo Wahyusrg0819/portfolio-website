@@ -141,31 +141,8 @@ const skills: Skill[] = [
     level: 75,
     bgColor: "from-[#3178C6]/10 to-[#3178C6]/20",
     barColor: "bg-[#3178C6]"
-  },
-  {
-    name: "MySQL & MongoDB",
-    icon: <FaDatabase className="w-16 h-16 text-[#00758F] group-hover:text-[#00ED64] transition-colors duration-300" />,
-    description: "Database untuk aplikasi modern",
-    level: 80,
-    bgColor: "from-[#00758F]/10 to-[#00758F]/20",
-    barColor: "bg-[#00758F]"
-  },
-  {
-    name: "DevOps",
-    icon: <FaServer className="w-16 h-16 text-[#2496ED] group-hover:text-[#1D73BB] transition-colors duration-300" />,
-    description: "Deployment dan manajemen server",
-    level: 70,
-    bgColor: "from-[#2496ED]/10 to-[#2496ED]/20",
-    barColor: "bg-[#2496ED]"
-  },
-  {
-    name: "NPM & Package Management",
-    icon: <SiNpm className="w-16 h-16 text-[#CB3837] group-hover:text-[#E53E3E] transition-colors duration-300" />,
-    description: "Manajemen dependensi proyek",
-    level: 85,
-    bgColor: "from-[#CB3837]/10 to-[#CB3837]/20",
-    barColor: "bg-[#CB3837]"
   }
+  
 ];
 
 const securityTools: SecurityTool[] = [
@@ -174,18 +151,6 @@ const securityTools: SecurityTool[] = [
     icon: <FaShieldAlt className="w-14 h-14 text-red-500 group-hover:text-red-600 transition-colors duration-300 relative z-10" />,
     description: "Pengujian keamanan sistem dan identifikasi kerentanan",
     bgColor: "from-red-500/10 to-red-500/20"
-  },
-  {
-    name: "Network Security",
-    icon: <FaNetworkWired className="w-14 h-14 text-purple-500 group-hover:text-purple-600 transition-colors duration-300 relative z-10" />,
-    description: "Analisis dan proteksi jaringan komputer",
-    bgColor: "from-purple-500/10 to-purple-500/20"
-  },
-  {
-    name: "Cryptography",
-    icon: <FaLock className="w-14 h-14 text-indigo-500 group-hover:text-indigo-600 transition-colors duration-300 relative z-10" />,
-    description: "Implementasi sistem enkripsi dan keamanan data",
-    bgColor: "from-indigo-500/10 to-indigo-500/20"
   }
 ];
 
