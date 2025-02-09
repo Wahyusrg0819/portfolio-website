@@ -14,17 +14,12 @@ import {
   FaArrowRight,
   FaReact,
   FaNodeJs,
-  FaServer,
-  FaDatabase,
-  FaShieldAlt,
-  FaNetworkWired,
-  FaLock
+  FaShieldAlt
 } from "react-icons/fa";
 import { 
   SiVuedotjs,
   SiFirebase,
-  SiTypescript,
-  SiNpm
+  SiTypescript
 } from "react-icons/si";
 
 interface Skill {
