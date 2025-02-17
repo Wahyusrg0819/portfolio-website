@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, LazyMotion, domAnimation } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { BiHomeAlt2, BiUser, BiFolder, BiEnvelope } from "react-icons/bi";
+import { RiMenu4Line } from "react-icons/ri";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,10 +27,10 @@ export default function Navbar() {
   if (!mounted) return null;
 
   const navItems = [
-    { name: "Beranda", path: "/" },
-    { name: "Tentang", path: "/about" },
-    { name: "Proyek", path: "/projects" },
-    { name: "Kontak", path: "/contact" },
+    { name: "Beranda", path: "/", icon: <BiHomeAlt2 className="text-xl" /> },
+    { name: "Tentang", path: "/about", icon: <BiUser className="text-xl" /> },
+    { name: "Proyek", path: "/projects", icon: <BiFolder className="text-xl" /> },
+    { name: "Kontak", path: "/contact", icon: <BiEnvelope className="text-xl" /> },
   ];
 
   return (
@@ -60,17 +62,27 @@ export default function Navbar() {
                 <Link
                   key={item.path}
                   href={item.path}
-                  className="relative group"
+                  className="relative group flex items-center gap-1"
                 >
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`${
+                      pathname === item.path 
+                        ? "text-primary"
+                        : "text-gray-600 group-hover:text-primary"
+                    } transition-colors`}
+                  >
+                    {item.icon}
+                  </motion.div>
                   <span className={`${
                     pathname === item.path 
                       ? "text-primary"
-                      : "text-gray-600 hover:text-primary"
+                      : "text-gray-600 group-hover:text-primary"
                   } transition-colors`}
                   >
                     {item.name}
                   </span>
-                  {/* Animated underline */}
                   <motion.span
                     className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300 ${
                       pathname === item.path ? "w-full" : "w-0"
@@ -88,28 +100,7 @@ export default function Navbar() {
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
-              <div className="w-6 h-6 flex flex-col justify-center items-center">
-                <motion.span
-                  animate={{
-                    rotate: isOpen ? 45 : 0,
-                    y: isOpen ? 8 : 0,
-                  }}
-                  className="w-6 h-0.5 bg-gray-600 block transition-all duration-300"
-                />
-                <motion.span
-                  animate={{
-                    opacity: isOpen ? 0 : 1,
-                  }}
-                  className="w-6 h-0.5 bg-gray-600 block my-1 transition-all duration-300"
-                />
-                <motion.span
-                  animate={{
-                    rotate: isOpen ? -45 : 0,
-                    y: isOpen ? -8 : 0,
-                  }}
-                  className="w-6 h-0.5 bg-gray-600 block transition-all duration-300"
-                />
-              </div>
+              <RiMenu4Line className="w-6 h-6 text-gray-600" />
             </motion.button>
           </div>
         </div>
@@ -137,13 +128,14 @@ export default function Navbar() {
                   >
                     <Link
                       href={item.path}
-                      className={`block px-3 py-2 rounded-lg ${
+                      className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
                         pathname === item.path
                           ? "text-primary bg-primary/10"
                           : "text-gray-600 hover:text-primary hover:bg-gray-50"
                       } transition-all duration-300`}
                       onClick={() => setIsOpen(false)}
                     >
+                      {item.icon}
                       {item.name}
                     </Link>
                   </motion.div>

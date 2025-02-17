@@ -150,23 +150,27 @@ const securityTools: SecurityTool[] = [
 ];
 
 const TypewriterComponent = () => {
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setIsMounted(true);
   }, []);
 
-  if (!mounted) {
+  // Render konten statis yang sama di server dan client sebelum hydration
+  if (!isMounted) {
     return (
-      <div className="min-h-[72px] flex items-center">
-        <span className="text-2xl md:text-4xl font-bold">Wahyu Muliadi Siregar</span>
+      <div className="min-h-[72px] flex items-center" suppressHydrationWarning>
+        <span className="inline-block bg-gradient-to-r from-primary-600 to-accent-purple bg-clip-text text-transparent" suppressHydrationWarning>
+          Wahyu M. Siregar
+        </span>
       </div>
     );
   }
 
+  // Hanya render Typewriter setelah mounting di client
   return (
-    <div className="min-h-[72px] flex items-center">
-      <div className="text-2xl md:text-4xl font-bold w-full overflow-hidden">
+    <div className="min-h-[72px] flex items-center" suppressHydrationWarning>
+      <div className="text-2xl md:text-4xl font-bold w-full" suppressHydrationWarning>
         <Typewriter
           options={{
             strings: [
@@ -198,148 +202,218 @@ export default function Home() {
     <LazyMotion features={domAnimation}>
       <div className="min-h-screen" suppressHydrationWarning>
         {/* Hero Section */}
-        <section className="min-h-screen relative flex items-center py-12 sm:py-16 md:py-20">
-          {/* Particles Background */}
+        <section className="min-h-screen relative flex items-center py-12 sm:py-16 md:py-20 overflow-hidden" suppressHydrationWarning>
+          {/* Rainbow Gradient Background with Animation */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent-purple/5 to-accent-pink/5 animate-gradient" suppressHydrationWarning>
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" suppressHydrationWarning />
+          </div>
+
+          {/* Enhanced Particles Background */}
           <Particles
             id="tsparticles"
             init={particlesInit}
             options={{
               particles: {
-                number: {
-                  value: 50,
-                  density: {
-                    enable: true,
-                    value_area: 800
-                  }
+                number: { 
+                  value: 30, 
+                  density: { 
+                    enable: true, 
+                    value_area: 800 
+                  } 
                 },
-                color: {
-                  value: "#4F46E5"
+                color: { 
+                  value: ["#4F46E5", "#EC4899", "#8B5CF6", "#14B8A6"] 
                 },
-                links: {
-                  enable: true,
+                links: { 
+                  enable: true, 
                   color: "#4F46E5",
-                  opacity: 0.2
+                  opacity: 0.2,
+                  distance: 150
                 },
-                move: {
-                  enable: true,
-                  speed: 1
+                move: { 
+                  enable: true, 
+                  speed: 1,
+                  direction: "none",
+                  random: true,
+                  straight: false,
+                  outModes: "out"
                 },
-                size: {
-                  value: 3
-                },
-                opacity: {
-                  value: 0.3
+                size: { value: 3 },
+                opacity: { 
+                  value: 0.3,
+                  anim: {
+                    enable: true,
+                    speed: 1,
+                    opacity_min: 0.1
+                  }
                 }
               },
               interactivity: {
-                events: {
-                  onHover: {
-                    enable: true,
-                    mode: "grab"
+                events: { 
+                  onHover: { 
+                    enable: true, 
+                    mode: "grab",
+                    parallax: { enable: true, force: 60 }
                   }
                 }
               },
-              background: {
-                color: {
-                  value: "transparent"
-                }
-              }
+              background: { color: { value: "transparent" } }
             }}
             className="absolute inset-0"
           />
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mx-4 sm:mx-6 lg:mx-8">
-              {/* Text Content */}
+              {/* Enhanced Text Content */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="flex-1 text-center md:text-left w-full md:w-1/2"
+                className="flex-1 text-center md:text-left w-full md:w-1/2 relative"
               >
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-                  <TypewriterComponent />
-                </h1>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.8 }}
-                  className="text-base sm:text-lg md:text-xl text-gray-600 mb-6"
-                >
-                  Mahasiswa Teknik Informatika di Universitas Islam Riau
-                </motion.p>
-
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto md:mx-0
-                    bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-md 
-                    p-4 sm:p-6 rounded-xl shadow-lg border border-white/50
-                    transform hover:scale-105 transition-all duration-300"
-                >
-                  <span className="font-medium text-gray-800">Passionate</span> dalam{" "}
-                  <span className="text-primary font-semibold">pengembangan aplikasi web</span>{" "}
-                  dan{" "}
-                  <span className="text-primary font-semibold">mobile</span> dengan fokus pada{" "}
-                  <span className="text-indigo-600 font-semibold">teknologi modern</span>{" "}
-                  dan{" "}
-                  <span className="text-indigo-600 font-semibold">user experience</span>.
-                </motion.p>
-                
-                {/* Social Links dengan hover effects */}
-                <motion.div 
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7, duration: 0.8 }}
-                  className="flex gap-4 sm:gap-6 justify-center md:justify-start mb-6 sm:mb-8"
-                >
-                  <motion.div whileHover={{ scale: 1.2, rotate: 360 }} whileTap={{ scale: 0.9 }}>
-                    <Link 
-                      href="https://github.com/Wahyusrg0819"
-                      target="_blank"
-                      className="text-gray-600 hover:text-primary transition-colors"
-                    >
-                      <FaGithub className="h-8 w-8" />
-                    </Link>
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.2, rotate: 360 }} whileTap={{ scale: 0.9 }}>
-                    <Link 
-                      href="#"
-                      target="_blank"
-                      className="text-gray-600 hover:text-primary transition-colors"
-                    >
-                      <FaInstagram className="h-8 w-8" />
-                    </Link>
-                  </motion.div>
-                </motion.div>
-
-                {/* Action Buttons dengan hover effects */}
+                {/* Floating Elements with Rainbow Colors */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.9, duration: 0.8 }}
-                  className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+                  animate={{
+                    rotate: [0, 360],
+                    scale: [1, 1.2, 1],
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="absolute -left-8 -top-8 w-16 h-16 bg-gradient-to-r from-primary/20 to-accent-purple/20 rounded-full blur-xl"
+                />
+                <motion.div
+                  animate={{
+                    rotate: [360, 0],
+                    scale: [1, 1.3, 1],
+                  }}
+                  transition={{
+                    duration: 15,
+                    repeat: Infinity,
+                    ease: "linear"
+                  }}
+                  className="absolute -right-8 bottom-8 w-20 h-20 bg-gradient-to-r from-accent-purple/20 to-accent-pink/20 rounded-full blur-xl"
+                />
+
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10 text-gray-900">
+                    <TypewriterComponent />
+                  </h1>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    className="relative z-10 mb-6"
+                  >
+                    <span className="text-base sm:text-lg md:text-xl text-gray-800 font-medium relative">
+                      <span className="relative">
+                        Mahasiswa Teknik Informatika di Universitas Islam Riau
+                        <motion.div
+                          className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary/80 to-accent-purple/80"
+                          initial={{ width: "0%" }}
+                          animate={{ width: "100%" }}
+                          transition={{ delay: 1, duration: 0.8 }}
+                        />
+                      </span>
+                    </span>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                  className="relative z-10 mb-8"
                 >
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Link
-                      href="/projects"
-                      className="bg-gradient-to-r from-primary-600 to-primary-500 text-white px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:from-primary-700 hover:to-primary-600 transition-all duration-300 shadow-lg hover:shadow-primary-500/50"
-                    >
-                      Lihat Proyek Saya
-                      <FaArrowRight className="w-4 h-4" />
-                    </Link>
+                  <p className="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed max-w-2xl mx-auto md:mx-0">
+                    <span className="font-bold text-gray-900">Passionate</span> dalam{" "}
+                    <span className="text-primary-700 font-bold">pengembangan aplikasi web</span>{" "}
+                      dan{" "}
+                    <span className="text-primary-700 font-bold">mobile</span> dengan fokus pada{" "}
+                    <span className="text-accent-purple font-bold">teknologi modern</span>{" "}
+                      dan{" "}
+                    <span className="text-accent-pink font-bold">user experience</span>.
+                    </p>
                   </motion.div>
-                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Link
-                      href="/contact"
-                      className="border-2 border-primary-500 text-primary-600 px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-primary-50 transition-all duration-300 shadow-lg hover:shadow-primary-500/30"
+                
+                  {/* Enhanced Social Links with Rainbow Effects */}
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7, duration: 0.8 }}
+                    className="flex gap-6 justify-center md:justify-start mb-8 relative z-10"
+                  >
+                    <motion.div 
+                      whileHover={{ scale: 1.2, rotate: 360 }} 
+                      whileTap={{ scale: 0.9 }}
+                      className="relative group"
                     >
-                      Hubungi Saya
-                    </Link>
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent-purple/20 rounded-full blur-md group-hover:blur-xl transition-all duration-300" />
+                      <Link 
+                        href="https://github.com/Wahyusrg0819"
+                        target="_blank"
+                      className="relative bg-white/80 p-3 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-primary/30 transition-all duration-300"
+                      >
+                      <FaGithub className="h-6 w-6 text-gray-800 group-hover:text-primary transition-colors" />
+                      </Link>
+                    </motion.div>
+                    <motion.div 
+                      whileHover={{ scale: 1.2, rotate: 360 }} 
+                      whileTap={{ scale: 0.9 }}
+                      className="relative group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/20 to-accent-pink/20 rounded-full blur-md group-hover:blur-xl transition-all duration-300" />
+                      <Link 
+                        href="#"
+                        target="_blank"
+                      className="relative bg-white/80 p-3 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-accent-purple/30 transition-all duration-300"
+                      >
+                      <FaInstagram className="h-6 w-6 text-gray-800 group-hover:text-accent-purple transition-colors" />
+                      </Link>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
+
+                  {/* Enhanced Action Buttons with Rainbow Effects */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.9, duration: 0.8 }}
+                    className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start relative z-10"
+                  >
+                    <motion.div 
+                      whileHover={{ scale: 1.05 }} 
+                      whileTap={{ scale: 0.95 }}
+                      className="relative group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent-purple/20 to-accent-pink/20 rounded-lg blur-md group-hover:blur-xl transition-all duration-300" />
+                      <Link
+                        href="/projects"
+                      className="relative bg-gradient-to-r from-primary-600 via-accent-purple to-accent-pink text-white px-8 py-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-lg group-hover:shadow-primary/50"
+                      >
+                        Lihat Proyek Saya
+                        <motion.div
+                          animate={{ x: [0, 5, 0] }}
+                          transition={{ repeat: Infinity, duration: 1.5 }}
+                        >
+                          <FaArrowRight className="w-4 h-4" />
+                        </motion.div>
+                      </Link>
+                    </motion.div>
+                    <motion.div 
+                      whileHover={{ scale: 1.05 }} 
+                      whileTap={{ scale: 0.95 }}
+                      className="relative group"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-accent-purple/10 to-accent-pink/10 rounded-lg blur-md group-hover:blur-xl transition-all duration-300" />
+                      <Link
+                        href="/contact"
+                      className="relative border-2 border-accent-purple text-accent-purple px-8 py-4 rounded-lg flex items-center justify-center gap-2 hover:bg-accent-purple/5 transition-all duration-300 shadow-lg group-hover:shadow-accent-purple/30"
+                      >
+                        Hubungi Saya
+                      </Link>
+                    </motion.div>
+                  </motion.div>
               </motion.div>
               
               {/* Profile Image */}
