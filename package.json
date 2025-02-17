@@ -11,6 +11,8 @@
   "dependencies": {
     "@formspree/react": "^2.5.1",
     "@heroicons/react": "^2.2.0",
+    "@react-three/drei": "^9.121.5",
+    "@react-three/fiber": "^8.17.14",
     "@tsparticles/engine": "^3.8.1",
     "framer-motion": "^12.3.0",
     "gray-matter": "^4.0.3",
@@ -20,6 +22,7 @@
     "react-icons": "^5.4.0",
     "react-particles": "^2.12.2",
     "react-text-effects": "^1.0.0",
+    "three": "^0.173.0",
     "tsparticles": "^3.8.1",
     "tsparticles-engine": "^2.12.0",
     "tsparticles-slim": "^2.12.0",

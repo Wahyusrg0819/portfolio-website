@@ -44,32 +44,100 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ scale: 1.05 }}
-      className={`group relative bg-gradient-to-br ${skill.bgColor} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm`}
+      whileHover={{ scale: 1.05, y: -5 }}
+      className={`group relative overflow-hidden bg-gradient-to-br ${skill.bgColor} p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-sm border border-white/20`}
     >
-      <div className="absolute inset-0 bg-white/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      {/* Background Effects */}
+      <div className="absolute inset-0 bg-gradient-shine opacity-20" />
+      <div className="absolute inset-0 bg-white/50 rounded-xl opacity-0 group-hover:opacity-10 transition-opacity duration-300" />
+      
+      {/* Glowing corners */}
+      <div className="absolute -top-1 -left-1 w-2 h-2 bg-primary/50 rounded-full blur-sm group-hover:scale-150 transition-transform duration-300" />
+      <div className="absolute -top-1 -right-1 w-2 h-2 bg-accent-purple/50 rounded-full blur-sm group-hover:scale-150 transition-transform duration-300" />
+      <div className="absolute -bottom-1 -left-1 w-2 h-2 bg-accent-blue/50 rounded-full blur-sm group-hover:scale-150 transition-transform duration-300" />
+      <div className="absolute -bottom-1 -right-1 w-2 h-2 bg-accent-teal/50 rounded-full blur-sm group-hover:scale-150 transition-transform duration-300" />
+
       <div className="relative z-10">
-        <div className="flex justify-center mb-6 transform group-hover:scale-110 transition-transform duration-300">
-          {skill.icon}
-        </div>
-        <h3 className="font-bold text-lg md:text-xl text-center mb-3 text-gray-900">{skill.name}</h3>
-        <p className="text-gray-700 text-center text-base leading-relaxed">{skill.description}</p>
+        {/* Icon Container */}
+        <motion.div 
+          className="flex justify-center mb-6"
+          whileHover={{ scale: 1.1, rotate: [0, 5, -5, 0] }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="relative">
+            {/* Icon Background Glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent-purple/20 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="transform group-hover:scale-110 transition-transform duration-300">
+              {skill.icon}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Title with gradient effect */}
+        <motion.h3 
+          className="font-bold text-lg md:text-xl text-center mb-3 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent"
+          whileHover={{ scale: 1.05 }}
+        >
+          {skill.name}
+        </motion.h3>
+
+        {/* Description with enhanced typography */}
+        <p className="text-gray-700 text-center text-base leading-relaxed font-medium">
+          {skill.description}
+        </p>
+
+        {/* Skill Level Indicator */}
         {skill.level && (
-          <div className="mt-6">
-            <div className="h-2.5 bg-gray-200/50 rounded-full overflow-hidden backdrop-blur-sm">
+          <motion.div 
+            className="mt-6"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="h-2.5 bg-gray-200/50 rounded-full overflow-hidden backdrop-blur-sm p-0.5">
               <motion.div
                 initial={{ width: 0 }}
                 whileInView={{ width: `${skill.level}%` }}
                 viewport={{ once: true }}
                 transition={{ duration: 1, ease: "easeOut" }}
-                className={`h-full ${skill.barColor} rounded-full shadow-lg`}
-              />
+                className={`h-full ${skill.barColor} rounded-full shadow-lg relative group`}
+              >
+                {/* Animated gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-shine animate-shine" />
+                
+                {/* Glowing dot at the end */}
+                <motion.div
+                  className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg"
+                  animate={{
+                    scale: [1, 1.5, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </motion.div>
             </div>
+            
+            {/* Skill Level Labels */}
             <div className="flex justify-between items-center mt-3">
-              <span className="text-sm font-semibold text-gray-700">Keahlian</span>
-              <span className="text-sm font-bold text-gray-900">{skill.level}%</span>
+              <motion.span 
+                className="text-sm font-semibold text-gray-700"
+                whileHover={{ scale: 1.1 }}
+              >
+                Keahlian
+              </motion.span>
+              <motion.span 
+                className="text-sm font-bold bg-gradient-to-r from-primary to-accent-purple bg-clip-text text-transparent"
+                whileHover={{ scale: 1.1 }}
+              >
+                {skill.level}%
+              </motion.span>
             </div>
-          </div>
+          </motion.div>
         )}
       </div>
     </motion.div>
@@ -543,50 +611,147 @@ export default function Home() {
 
         {/* Skills Section */}
         <section className="py-12 sm:py-16 md:py-20 relative">
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-primary/5 to-gray-100">
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" />
+          {/* Enhanced Background */}
+          <div className="absolute inset-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-primary/5 to-gray-100">
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" />
+            </div>
+            
+            {/* Animated background elements */}
+            <motion.div
+              className="absolute top-20 left-20 w-72 h-72 bg-primary/5 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.2, 0.3],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-20 w-72 h-72 bg-accent-purple/5 rounded-full blur-3xl"
+              animate={{
+                scale: [1.2, 1, 1.2],
+                opacity: [0.2, 0.3, 0.2],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 4
+              }}
+            />
           </div>
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative">
-            {/* Skills Header */}
+            {/* Enhanced Section Header */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-8 sm:mb-12 md:mb-16"
+              className="text-center mb-12 sm:mb-16 md:mb-20"
             >
               {/* Background accent untuk judul */}
-              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-transparent via-primary/5 to-transparent blur-xl" />
+              <div className="absolute inset-0 -z-10">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent blur-xl" />
+                <motion.div
+                  className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-primary/10 rounded-full blur-2xl"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.2, 0.3],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </div>
               
-              {/* Judul dengan styling yang ditingkatkan */}
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-900 tracking-tight relative">
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
+              {/* Enhanced Title */}
+              <motion.h2 
+                className="text-4xl md:text-5xl font-bold mb-8 text-gray-900 tracking-tight relative inline-block"
+                whileHover={{ scale: 1.05 }}
+              >
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent-purple to-accent-pink">
                   Teknologi yang Saya Kuasai
                 </span>
-                <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-primary/30 rounded-full" />
-              </h2>
+                <motion.div
+                  className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary/50 via-accent-purple/50 to-accent-pink/50 rounded-full"
+                  initial={{ width: 0 }}
+                  whileInView={{ width: "100%" }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5, duration: 0.8 }}
+                />
+              </motion.h2>
 
-              {/* Deskripsi dengan styling yang ditingkatkan */}
-              <div className="relative max-w-3xl mx-auto">
-                <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium px-6 py-4 bg-white/50 rounded-xl shadow-sm backdrop-blur-sm border border-gray-100">
-                  Berfokus pada{" "}
-                  <span className="text-primary font-semibold">pengembangan web modern</span>{" "}
-                  dan{" "}
-                  <span className="text-primary font-semibold">keamanan siber</span>,{" "}
-                  saya terus mengembangkan keterampilan dalam berbagai teknologi terkini.
-                </p>
+              {/* Enhanced Description */}
+              <motion.div 
+                className="relative max-w-3xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <div className="relative">
+                  <div className="absolute inset-0 bg-white/50 rounded-xl backdrop-blur-sm" />
+                  <p className="relative text-lg md:text-xl text-gray-700 leading-relaxed font-medium px-6 py-4 border border-gray-100/50 rounded-xl shadow-sm">
+                    Berfokus pada{" "}
+                    <span className="text-primary font-semibold">pengembangan web modern</span>{" "}
+                    dan{" "}
+                    <span className="text-primary font-semibold">keamanan siber</span>,{" "}
+                    saya terus mengembangkan keterampilan dalam berbagai teknologi terkini.
+                  </p>
+                </div>
                 
-                {/* Decorative dots */}
-                <div className="absolute -right-4 -bottom-4 w-8 h-8 bg-primary/10 rounded-full" />
-                <div className="absolute -left-4 -top-4 w-6 h-6 bg-primary/10 rounded-full" />
-              </div>
+                {/* Decorative elements */}
+                <motion.div
+                  className="absolute -right-4 -bottom-4 w-8 h-8 bg-primary/10 rounded-full"
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 0.3, 0.5],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div
+                  className="absolute -left-4 -top-4 w-6 h-6 bg-accent-purple/10 rounded-full"
+                  animate={{
+                    scale: [1.2, 1, 1.2],
+                    opacity: [0.3, 0.5, 0.3],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1.5
+                  }}
+                />
+              </motion.div>
             </motion.div>
 
-            {/* Skills Grid dengan margin yang konsisten */}
-            <div className="relative backdrop-blur-sm bg-white/40 p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl mx-4 sm:mx-6 lg:mx-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
-                {skills.map((skill) => (
-                  <SkillCard key={skill.name} skill={skill} />
+            {/* Enhanced Skills Grid */}
+            <div className="relative backdrop-blur-sm bg-white/40 p-4 sm:p-6 md:p-8 rounded-2xl shadow-xl mx-4 sm:mx-6 lg:mx-8 border border-white/20">
+              {/* Grid background effects */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10 rounded-2xl" />
+              <div className="absolute inset-0 bg-gradient-shine opacity-10" />
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 relative">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    <SkillCard skill={skill} />
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -638,10 +803,6 @@ export default function Home() {
               </motion.p>
             </motion.div>
           </div>
-
-          {/* Decorative Elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-accent-purple/10 rounded-full blur-3xl" />
         </section>
       </div>
     </LazyMotion>
