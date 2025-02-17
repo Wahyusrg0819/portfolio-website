@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { FaGithub, FaInstagram, FaEnvelope, FaHeart, FaHome, FaUser, FaFolder, FaPhoneAlt } from "react-icons/fa";
-import { motion, LazyMotion, domAnimation, m } from "framer-motion";
+import { LazyMotion, domAnimation, m } from "framer-motion";
 import { useState, useEffect } from "react";
 
 export default function Footer() {
