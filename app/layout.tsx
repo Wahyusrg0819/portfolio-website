@@ -20,6 +20,16 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Portfolio | Wahyu Muliadi Siregar",
   description: "Mahasiswa Teknik Informatika di Universitas Islam Riau",
+  icons: [
+    {
+      rel: 'icon',
+      url: '/favicon.ico',
+    },
+    {
+      rel: 'shortcut icon',
+      url: '/favicon.ico',
+    }
+  ],
 };
 
 export default function RootLayout({
