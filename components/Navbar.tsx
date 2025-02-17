@@ -38,105 +38,168 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed w-full z-50 transition-all duration-300 ${
+        className={`fixed w-full z-50 transition-all duration-500 ${
           scrolled 
-            ? "bg-white/80 backdrop-blur-lg shadow-lg"
+            ? "bg-white/70 backdrop-blur-xl shadow-lg shadow-black/5"
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
+        <div className="relative">
+          {/* Gradient line at bottom */}
+          <motion.div 
+            className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+          />
+
+          {/* Background decorative elements */}
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent-purple/5 to-accent-pink/5" />
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link href="/" className="font-bold text-xl text-primary">
-                Wahyu Shiregaru
-              </Link>
-            </motion.div>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className="relative group flex items-center gap-1"
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`${
+              className="absolute -left-4 top-1/2 -translate-y-1/2 w-24 h-24 bg-primary/10 rounded-full blur-xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.3, 0.5],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div
+              className="absolute -right-4 top-1/2 -translate-y-1/2 w-24 h-24 bg-accent-purple/10 rounded-full blur-xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2
+              }}
+            />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div className="flex items-center justify-between h-16">
+              {/* Logo with enhanced animation */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent-purple/20 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <Link href="/" className="relative font-bold text-xl bg-gradient-to-r from-primary to-accent-purple bg-clip-text text-transparent group-hover:from-accent-purple group-hover:to-primary transition-all duration-300">
+                  Wahyu Shiregaru
+                </Link>
+              </motion.div>
+              
+              {/* Desktop Menu with enhanced effects */}
+              <div className="hidden md:flex space-x-8">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    href={item.path}
+                    className="relative group flex items-center gap-2"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`${
+                        pathname === item.path 
+                          ? "text-primary"
+                          : "text-gray-600 group-hover:text-primary"
+                      } transition-colors duration-300`}
+                    >
+                      {item.icon}
+                    </motion.div>
+                    <span className={`${
                       pathname === item.path 
                         ? "text-primary"
                         : "text-gray-600 group-hover:text-primary"
-                    } transition-colors`}
-                  >
-                    {item.icon}
-                  </motion.div>
-                  <span className={`${
-                    pathname === item.path 
-                      ? "text-primary"
-                      : "text-gray-600 group-hover:text-primary"
-                  } transition-colors`}
-                  >
-                    {item.name}
-                  </span>
-                  <motion.span
-                    className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300 ${
-                      pathname === item.path ? "w-full" : "w-0"
-                    }`}
-                    whileHover={{ width: "100%" }}
-                  />
-                </Link>
-              ))}
-            </div>
+                    } transition-colors duration-300 relative`}
+                    >
+                      {item.name}
+                      <motion.span
+                        className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary/50 to-accent-purple/50 rounded-full"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: pathname === item.path ? 1 : 0 }}
+                        whileHover={{ scaleX: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </span>
+                  </Link>
+                ))}
+              </div>
 
-            {/* Mobile Menu Button */}
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="Toggle menu"
-            >
-              <RiMenu4Line className="w-6 h-6 text-gray-600" />
-            </motion.button>
+              {/* Mobile Menu Button with enhanced animation */}
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                className="md:hidden relative group p-2 rounded-lg hover:bg-white/50 transition-colors duration-300"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label="Toggle menu"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent-purple/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <RiMenu4Line className="w-6 h-6 text-gray-600 group-hover:text-primary transition-colors duration-300" />
+              </motion.button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu with enhanced animation */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden overflow-hidden"
+              transition={{ duration: 0.3 }}
+              className="md:hidden overflow-hidden relative"
             >
+              <div className="absolute inset-0 bg-white/70 backdrop-blur-xl" />
               <motion.div
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 exit={{ x: -20, opacity: 0 }}
-                className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-lg shadow-lg"
+                className="px-2 pt-2 pb-3 space-y-1 relative"
               >
-                {navItems.map((item) => (
+                {navItems.map((item, index) => (
                   <motion.div
                     key={item.path}
-                    whileHover={{ x: 10 }}
-                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="relative group"
                   >
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent-purple/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <Link
                       href={item.path}
                       className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
                         pathname === item.path
                           ? "text-primary bg-primary/10"
-                          : "text-gray-600 hover:text-primary hover:bg-gray-50"
-                      } transition-all duration-300`}
+                          : "text-gray-600 hover:text-primary"
+                      } transition-all duration-300 relative`}
                       onClick={() => setIsOpen(false)}
                     >
-                      {item.icon}
-                      {item.name}
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {item.icon}
+                      </motion.div>
+                      <span className="relative">
+                        {item.name}
+                        <motion.span
+                          className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary/50 to-accent-purple/50 rounded-full"
+                          initial={{ scaleX: 0 }}
+                          animate={{ scaleX: pathname === item.path ? 1 : 0 }}
+                          transition={{ duration: 0.3 }}
+                        />
+                      </span>
                     </Link>
                   </motion.div>
                 ))}

@@ -424,21 +424,36 @@ export default function Home() {
                 className="flex-1 flex justify-center md:justify-end w-full md:w-1/2"
               >
                 <div className="relative w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px]">
-                  {/* Rotating borders with glow */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/30 to-accent-purple/30 blur-3xl animate-pulse-slow" />
+                  {/* Outer glow effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/30 via-accent-purple/30 to-accent-pink/30 blur-3xl animate-pulse-slow" />
                   
-                  {/* Rotating geometric shapes */}
-                  <div className="absolute inset-0 animate-spin-slow">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-primary/40 rounded-full blur-sm" />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-accent-purple/40 rounded-full blur-sm" />
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-accent-blue/40 rounded-full blur-sm" />
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-accent-teal/40 rounded-full blur-sm" />
+                  {/* Rotating border with multiple layers */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-shine animate-spin-slow" style={{ backgroundSize: '200% 200%' }}>
+                    <div className="absolute inset-1 rounded-full bg-gray-900/90 backdrop-blur-sm" />
                   </div>
 
-                  {/* Rotating border with gradient */}
-                  <div className="absolute inset-4 rounded-full border-2 border-transparent bg-gradient-shine animate-spin-slow" 
-                       style={{ backgroundSize: '200% 200%' }} />
+                  {/* Rotating geometric shapes */}
+                  <div className="absolute inset-0 animate-spin-slow">
+                    {/* Corner dots with glowing effect */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-primary/40 rounded-full blur-sm">
+                      <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-50" />
+                    </div>
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-4 bg-accent-purple/40 rounded-full blur-sm">
+                      <div className="absolute inset-0 rounded-full bg-accent-purple animate-ping opacity-50" />
+                    </div>
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-accent-blue/40 rounded-full blur-sm">
+                      <div className="absolute inset-0 rounded-full bg-accent-blue animate-ping opacity-50" />
+                    </div>
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-accent-teal/40 rounded-full blur-sm">
+                      <div className="absolute inset-0 rounded-full bg-accent-teal animate-ping opacity-50" />
+                    </div>
 
+                    {/* Additional decorative elements */}
+                    <div className="absolute inset-0 rounded-full border-2 border-white/10 animate-reverse-spin" />
+                    <div className="absolute inset-2 rounded-full border border-white/5 animate-spin-slow" />
+                  </div>
+
+                  {/* Main image container with enhanced effects */}
                   <motion.div
                     animate={{ 
                       y: [0, -10, 0],
@@ -451,9 +466,10 @@ export default function Home() {
                     }}
                     className="relative w-full h-full"
                   >
-                    {/* Main image container */}
-                    <div className="absolute inset-6 rounded-full overflow-hidden bg-gradient-to-br from-primary/10 to-accent-purple/10 p-1">
-                      <div className="relative w-full h-full rounded-full overflow-hidden">
+                    {/* Inner container with gradient border */}
+                    <div className="absolute inset-6 rounded-full p-1 bg-gradient-to-br from-primary/20 via-accent-purple/20 to-accent-pink/20 backdrop-blur-sm">
+                      <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-900/90">
+                        {/* Image */}
                         <Image
                           src="/me.png"
                           alt="Wahyu Muliadi Siregar"
@@ -462,45 +478,62 @@ export default function Home() {
                           priority
                           sizes="(max-width: 768px) 288px, 384px"
                         />
-                        {/* Overlay with gradient and texture */}
+
+                        {/* Overlay effects */}
                         <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-accent-purple/10 mix-blend-overlay" />
-                        <div className="absolute inset-0 bg-gradient-shine opacity-30" 
-                             style={{ backgroundSize: '200% 200%' }} />
+                        <div className="absolute inset-0 bg-gradient-shine opacity-30" style={{ backgroundSize: '200% 200%' }} />
+                        
+                        {/* Inner glow */}
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/5 to-accent-purple/5 mix-blend-overlay" />
                       </div>
                     </div>
 
-                    {/* Decorative elements */}
+                    {/* Additional decorative elements */}
                     <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-primary/20 to-accent-purple/20 blur animate-pulse-slow" />
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/10 to-white/20 mix-blend-overlay" />
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-r from-white/5 to-white/10 mix-blend-overlay" />
                   </motion.div>
 
-                  {/* Floating particles dengan posisi tetap */}
+                  {/* Floating particles with enhanced animation */}
                   <div className="absolute inset-0">
                     {[
-                      { left: '20%', top: '20%' },
-                      { left: '80%', top: '20%' },
-                      { left: '50%', top: '10%' },
-                      { left: '20%', top: '80%' },
-                      { left: '80%', top: '80%' },
-                      { left: '50%', top: '90%' }
+                      { left: '20%', top: '10%', delay: 0 },
+                      { left: '80%', top: '15%', delay: 0.5 },
+                      { left: '10%', top: '50%', delay: 1 },
+                      { left: '90%', top: '45%', delay: 1.5 },
+                      { left: '30%', top: '90%', delay: 2 },
+                      { left: '70%', top: '85%', delay: 2.5 }
                     ].map((position, i) => (
                       <motion.div
                         key={i}
                         className="absolute w-2 h-2 bg-primary/30 rounded-full"
-                        initial={{ scale: 0 }}
+                        initial={{ scale: 0, opacity: 0 }}
                         animate={{
                           scale: [0, 1, 0],
-                          y: [0, -10, 0],
+                          opacity: [0, 1, 0],
+                          y: [-20, 0, 20]
                         }}
                         transition={{
-                          duration: 2,
+                          duration: 3,
                           repeat: Infinity,
-                          delay: i * 0.4,
+                          delay: position.delay,
                           ease: "easeInOut",
                         }}
-                        style={position}
-                      />
+                        style={{
+                          left: position.left,
+                          top: position.top
+                        }}
+                      >
+                        <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                      </motion.div>
                     ))}
+                  </div>
+
+                  {/* Glowing orbs */}
+                  <div className="absolute -inset-4 opacity-50">
+                    <div className="absolute top-1/2 left-0 w-4 h-4 bg-primary/30 rounded-full blur-sm animate-pulse" />
+                    <div className="absolute top-1/2 right-0 w-4 h-4 bg-accent-purple/30 rounded-full blur-sm animate-pulse" />
+                    <div className="absolute top-0 left-1/2 w-4 h-4 bg-accent-pink/30 rounded-full blur-sm animate-pulse" />
+                    <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-accent-blue/30 rounded-full blur-sm animate-pulse" />
                   </div>
                 </div>
               </motion.div>
