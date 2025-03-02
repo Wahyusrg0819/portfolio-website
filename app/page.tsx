@@ -18,8 +18,7 @@ import {
 } from "react-icons/fa";
 import { 
   SiVuedotjs,
-  SiFirebase,
-  SiTypescript
+  SiNextdotjs
 } from "react-icons/si";
 
 interface Skill {
@@ -169,7 +168,7 @@ const skills: Skill[] = [
     name: "React & React Native",
     icon: <FaReact className="w-16 h-16 text-[#61DAFB] group-hover:text-[#00D8FF] transition-colors duration-300" />,
     description: "Pengembangan aplikasi web dan mobile modern",
-    level: 85,
+    level: 30,
     bgColor: "from-[#61DAFB]/10 to-[#61DAFB]/20",
     barColor: "bg-[#61DAFB]"
   },
@@ -177,35 +176,19 @@ const skills: Skill[] = [
     name: "Vue.js",
     icon: <SiVuedotjs className="w-16 h-16 text-[#42b883] group-hover:text-[#34495e] transition-colors duration-300" />,
     description: "Framework JavaScript progresif untuk UI",
-    level: 75,
+    level: 30,
     bgColor: "from-[#42b883]/10 to-[#42b883]/20",
     barColor: "bg-[#42b883]"
   },
+ // Start Generation Here
   {
-    name: "Node.js",
-    icon: <FaNodeJs className="w-16 h-16 text-[#68A063] group-hover:text-[#3C873A] transition-colors duration-300" />,
-    description: "Runtime JavaScript untuk backend",
-    level: 80,
-    bgColor: "from-[#68A063]/10 to-[#68A063]/20",
-    barColor: "bg-[#68A063]"
+    name: "Next.js",
+    icon: <SiNextdotjs className="w-16 h-16 text-black group-hover:text-black transition-colors duration-300" />, // Menggunakan icon Next.js dari react-icons
+    description: "Framework React untuk pengembangan aplikasi web yang cepat dan efisien",
+    level: 40,
+    bgColor: "from-gray-800/10 to-gray-800/20",
+    barColor: "bg-green-500"
   },
-  {
-    name: "Firebase",
-    icon: <SiFirebase className="w-16 h-16 text-[#FFCA28] group-hover:text-[#FFA000] transition-colors duration-300" />,
-    description: "Backend dan database untuk aplikasi",
-    level: 80,
-    bgColor: "from-[#FFCA28]/10 to-[#FFCA28]/20",
-    barColor: "bg-[#FFA000]"
-  },
-  {
-    name: "TypeScript",
-    icon: <SiTypescript className="w-16 h-16 text-[#3178C6] group-hover:text-[#235A97] transition-colors duration-300" />,
-    description: "Pengembangan yang aman dan terstruktur",
-    level: 75,
-    bgColor: "from-[#3178C6]/10 to-[#3178C6]/20",
-    barColor: "bg-[#3178C6]"
-  }
-  
 ];
 
 const securityTools: SecurityTool[] = [
@@ -229,7 +212,7 @@ const TypewriterComponent = () => {
     return (
       <div className="min-h-[72px] flex items-center" suppressHydrationWarning>
         <span className="inline-block bg-gradient-to-r from-primary-600 to-accent-purple bg-clip-text text-transparent" suppressHydrationWarning>
-          Wahyu M. Siregar
+          Wahyu Muliadi Siregar
         </span>
       </div>
     );
@@ -242,7 +225,7 @@ const TypewriterComponent = () => {
         <Typewriter
           options={{
             strings: [
-              'Wahyu M. Siregar',
+              'Wahyu Muliadi Siregar',
               'Web Developer',
               'Mobile Developer',
               'Security Expert'
@@ -257,6 +240,16 @@ const TypewriterComponent = () => {
           }}
         />
       </div>
+    </div>
+  );
+};
+
+const SkillCardContainer = () => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {skills.map((skill) => (
+        <SkillCard key={skill.name} skill={skill} />
+      ))}
     </div>
   );
 };

@@ -15,7 +15,7 @@ const skills = [
     name: "React & React Native",
     icon: <FaReact className="w-16 h-16 text-[#61DAFB]" />,
     description: "Pengembangan aplikasi web dan mobile modern",
-    level: 85,
+    level: 30,
     bgColor: "from-[#61DAFB]/10 to-[#61DAFB]/20",
     barColor: "bg-[#61DAFB]"
   },
@@ -23,7 +23,7 @@ const skills = [
     name: "Vue.js",
     icon: <SiVuedotjs className="w-16 h-16 text-[#42b883]" />,
     description: "Framework JavaScript progresif untuk UI",
-    level: 75,
+    level: 30,
     bgColor: "from-[#42b883]/10 to-[#42b883]/20",
     barColor: "bg-[#42b883]"
   },
