@@ -375,18 +375,18 @@ export default function Home() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.8 }}
-                  className="relative z-10 mb-8"
-                >
-                  <p className="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed max-w-2xl mx-auto md:mx-0">
-                    <span className="font-bold text-gray-900">Passionate</span> dalam{" "}
-                    <span className="text-primary-700 font-bold">pengembangan aplikasi web</span>{" "}
-                      dan{" "}
-                    <span className="text-primary-700 font-bold">mobile</span> dengan fokus pada{" "}
-                    <span className="text-accent-purple font-bold">teknologi modern</span>{" "}
-                      dan{" "}
-                    <span className="text-accent-pink font-bold">user experience</span>.
-                    </p>
-                  </motion.div>
+                    className="relative z-10 mb-8"
+                  >
+                    <p className="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed max-w-2xl mx-auto md:mx-0" id="main-content">
+                      <span className="font-bold text-gray-900">Passionate</span> dalam{" "}
+                      <span className="text-primary-700 font-bold">pengembangan aplikasi web</span>{" "}
+                        dan{" "}
+                      <span className="text-primary-700 font-bold">mobile</span> dengan fokus pada{" "}
+                      <span className="text-accent-purple font-bold">teknologi modern</span>{" "}
+                        dan{" "}
+                      <span className="text-accent-pink font-bold">user experience</span>.
+                      </p>
+                    </motion.div>
                 
                   {/* Enhanced Social Links with Rainbow Effects */}
                   <motion.div 
@@ -404,7 +404,8 @@ export default function Home() {
                       <Link 
                         href="https://github.com/Wahyusrg0819"
                         target="_blank"
-                      className="relative bg-white/80 p-3 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-primary/30 transition-all duration-300"
+                        className="relative bg-white/80 p-3 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-primary/30 transition-all duration-300"
+                        aria-label="GitHub Profile"
                       >
                       <FaGithub className="h-6 w-6 text-gray-800 group-hover:text-primary transition-colors" />
                       </Link>
@@ -418,7 +419,8 @@ export default function Home() {
                       <Link 
                         href="#"
                         target="_blank"
-                      className="relative bg-white/80 p-3 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-accent-purple/30 transition-all duration-300"
+                        className="relative bg-white/80 p-3 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/50 shadow-lg group-hover:shadow-accent-purple/30 transition-all duration-300"
+                        aria-label="Instagram Profile"
                       >
                       <FaInstagram className="h-6 w-6 text-gray-800 group-hover:text-accent-purple transition-colors" />
                       </Link>
@@ -787,6 +789,36 @@ export default function Home() {
             </motion.div>
           </div>
         </section>
+        
+        {/* JSON-LD structured data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Wahyu Muliadi Siregar",
+              "url": "https://yourdomain.com", // Update with your actual domain when in production
+              "image": "/me.png",
+              "jobTitle": "Mahasiswa Teknik Informatika",
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Universitas Islam Riau"
+              },
+              "description": "Mahasiswa Teknik Informatika di Universitas Islam Riau. Spesialis pengembangan web dan keamanan siber.",
+              "sameAs": [
+                "https://github.com/Wahyusrg0819",
+                // Add other social media URLs when available
+              ],
+              "skills": [
+                "React & React Native",
+                "Vue.js",
+                "Next.js",
+                "Penetration Testing"
+              ]
+            })
+          }}
+        />
       </div>
     </LazyMotion>
   );
