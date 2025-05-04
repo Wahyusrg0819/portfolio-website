@@ -5,12 +5,66 @@ import { FaEnvelope, FaGithub, FaInstagram, FaMapMarkerAlt, FaWhatsapp, FaLinked
 import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return isMobile;
+}
+
+// Pindahkan konfigurasi particles ke konstanta terpisah di luar komponen
+const particlesOptions = {
+  particles: {
+    number: { value: 8, density: { enable: true, value_area: 800 } },
+    color: { value: ["#4F46E5", "#EC4899"] }, // Kurangi jumlah warna
+    links: { 
+      enable: true, 
+      color: "#4F46E5",
+      opacity: 0.2,
+      distance: 150
+    },
+    move: { 
+      enable: true, 
+      speed: 1,
+      direction: "none" as const,
+      random: true,
+      straight: false,
+      outMode: "out" as const
+    },
+    size: { value: 3 },
+    opacity: { value: 0.3 }
+  },
+  interactivity: {
+    events: { 
+      onHover: { 
+        enable: true, 
+        mode: "grab" as const
+      }
+    }
+  },
+  background: { color: { value: "transparent" } }
+};
+
+// Lazy load Particles untuk mengurangi beban awal
+const DynamicParticles = dynamic(() => import('react-particles'), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0" />
+});
 
 export default function Contact() {
+  const [mounted, setMounted] = useState(false);
+  const isMobile = useIsMobile();
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
+  useEffect(() => setMounted(true), []);
 
   const contactInfo = [
     {
@@ -87,6 +141,8 @@ export default function Contact() {
     },
   ];
 
+  if (!mounted) return null;
+
   return (
     <LazyMotion features={domAnimation}>
       <div className="min-h-screen pt-16">
@@ -97,43 +153,14 @@ export default function Contact() {
           </div>
 
           {/* Particles dengan warna yang lebih beragam */}
-          <Particles
-            id="tsparticles"
-            init={particlesInit}
-            options={{
-              particles: {
-                number: { value: 30, density: { enable: true, value_area: 800 } },
-                color: { value: ["#4F46E5", "#EC4899", "#8B5CF6", "#14B8A6"] },
-                links: { 
-                  enable: true, 
-                  color: "#4F46E5",
-                  opacity: 0.2,
-                  distance: 150
-                },
-                move: { 
-                  enable: true, 
-                  speed: 1,
-                  direction: "none",
-                  random: true,
-                  straight: false,
-                  outModes: "out"
-                },
-                size: { value: 3 },
-                opacity: { value: 0.3 }
-              },
-              interactivity: {
-                events: { 
-                  onHover: { 
-                    enable: true, 
-                    mode: "grab",
-                    parallax: { enable: true, force: 60 }
-                  }
-                }
-              },
-              background: { color: { value: "transparent" } }
-            }}
-            className="absolute inset-0"
-          />
+          {!isMobile && (
+            <DynamicParticles
+              id="tsparticles"
+              init={particlesInit}
+              options={particlesOptions}
+              className="absolute inset-0"
+            />
+          )}
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
             {/* Header Section dengan teks yang lebih kontras */}

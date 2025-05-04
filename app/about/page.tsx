@@ -8,7 +8,8 @@ import { SiVuedotjs } from "react-icons/si";
 import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
 
 const skills = [
   {
@@ -30,10 +31,50 @@ const skills = [
   // ... tambahkan skill lainnya dari page.tsx
 ];
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return isMobile;
+}
+
+// Pindahkan konfigurasi particles ke konstanta terpisah di luar komponen
+const particlesOptions = {
+  particles: {
+    number: { value: 8, density: { enable: true, value_area: 800 } },
+    color: { value: "#4F46E5" },
+    links: { enable: true, color: "#4F46E5", opacity: 0.2 },
+    move: { enable: true, speed: 1 },
+    size: { value: 3 },
+    opacity: { value: 0.3 }
+  },
+  interactivity: {
+    events: {
+      onHover: { enable: true, mode: "grab" }
+    }
+  },
+  background: { color: { value: "transparent" } }
+};
+
+// Lazy load Particles untuk mengurangi beban awal
+const DynamicParticles = dynamic(() => import('react-particles'), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0" />
+});
+
 export default function About() {
+  const [mounted, setMounted] = useState(false);
+  const isMobile = useIsMobile();
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <LazyMotion features={domAnimation}>
@@ -41,27 +82,14 @@ export default function About() {
         {/* Hero Section */}
         <section className="min-h-[80vh] relative flex items-center py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
           {/* Particles Background */}
-          <Particles
-            id="tsparticles"
-            init={particlesInit}
-            options={{
-              particles: {
-                number: { value: 30, density: { enable: true, value_area: 800 } },
-                color: { value: "#4F46E5" },
-                links: { enable: true, color: "#4F46E5", opacity: 0.2 },
-                move: { enable: true, speed: 1 },
-                size: { value: 3 },
-                opacity: { value: 0.3 }
-              },
-              interactivity: {
-                events: {
-                  onHover: { enable: true, mode: "grab" }
-                }
-              },
-              background: { color: { value: "transparent" } }
-            }}
-            className="absolute inset-0"
-          />
+          {!isMobile && (
+            <DynamicParticles
+              id="tsparticles"
+              init={particlesInit}
+              options={particlesOptions}
+              className="absolute inset-0"
+            />
+          )}
 
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
@@ -135,7 +163,7 @@ export default function About() {
                   alt="Wahyu Muliadi Siregar"
                   fill
                   className="object-cover rounded-2xl"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  sizes="(max-width: 600px) 200px, (max-width: 1200px) 400px, 600px"
                   priority
                 />
                 <div className="absolute inset-0 bg-gradient-shine opacity-30" 

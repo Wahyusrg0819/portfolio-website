@@ -19,6 +19,7 @@ import {
   SiVuedotjs,
   SiNextdotjs
 } from "react-icons/si";
+import dynamic from 'next/dynamic';
 
 interface Skill {
   name: string;
@@ -243,11 +244,81 @@ const TypewriterComponent = () => {
   );
 };
 
+// Tambahkan hook untuk deteksi mobile
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return isMobile;
+}
+
+// Pindahkan konfigurasi particles ke konstanta terpisah di luar komponen
+const particlesOptions = {
+  particles: {
+    number: { 
+      value: 10, // Kurangi jumlah partikel
+      density: { 
+        enable: true, 
+        value_area: 800 
+      } 
+    },
+    color: { 
+      value: ["#4F46E5", "#EC4899", "#8B5CF6"] // Kurangi jumlah warna
+    },
+    links: { 
+      enable: true, 
+      color: "#4F46E5",
+      opacity: 0.2,
+      distance: 150
+    },
+    move: { 
+      enable: true, 
+      speed: 1,
+      direction: "none" as const,
+      random: true,
+      straight: false,
+      outMode: "out" as const
+    },
+    size: { value: 3 },
+    opacity: { 
+      value: 0.3,
+      anim: {
+        enable: true,
+        speed: 1,
+        opacity_min: 0.1
+      }
+    }
+  },
+  interactivity: {
+    events: { 
+      onHover: { 
+        enable: true, 
+        mode: "grab" as const,
+      }
+    }
+  },
+  background: { color: { value: "transparent" } }
+};
+
+// Lazy load Particles untuk mengurangi beban awal
+const DynamicParticles = dynamic(() => import('react-particles'), {
+  ssr: false,
+  loading: () => <div className="absolute inset-0" />
+});
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+  const isMobile = useIsMobile();
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadSlim(engine);
   }, []);
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <LazyMotion features={domAnimation}>
@@ -255,63 +326,19 @@ export default function Home() {
         {/* Hero Section */}
         <section className="min-h-screen relative flex items-center py-12 sm:py-16 md:py-20 overflow-hidden" suppressHydrationWarning>
           {/* Rainbow Gradient Background with Animation */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent-purple/5 to-accent-pink/5 animate-gradient" suppressHydrationWarning>
+          <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-accent-purple/5 to-accent-pink/5 animate-gradient${isMobile ? ' md:block hidden' : ''}`} suppressHydrationWarning>
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:14px_24px]" suppressHydrationWarning />
           </div>
 
           {/* Enhanced Particles Background */}
-          <Particles
-            id="tsparticles"
-            init={particlesInit}
-            options={{
-              particles: {
-                number: { 
-                  value: 30, 
-                  density: { 
-                    enable: true, 
-                    value_area: 800 
-                  } 
-                },
-                color: { 
-                  value: ["#4F46E5", "#EC4899", "#8B5CF6", "#14B8A6"] 
-                },
-                links: { 
-                  enable: true, 
-                  color: "#4F46E5",
-                  opacity: 0.2,
-                  distance: 150
-                },
-                move: { 
-                  enable: true, 
-                  speed: 1,
-                  direction: "none",
-                  random: true,
-                  straight: false,
-                  outModes: "out"
-                },
-                size: { value: 3 },
-                opacity: { 
-                  value: 0.3,
-                  anim: {
-                    enable: true,
-                    speed: 1,
-                    opacity_min: 0.1
-                  }
-                }
-              },
-              interactivity: {
-                events: { 
-                  onHover: { 
-                    enable: true, 
-                    mode: "grab",
-                    parallax: { enable: true, force: 60 }
-                  }
-                }
-              },
-              background: { color: { value: "transparent" } }
-            }}
-            className="absolute inset-0"
-          />
+          {!isMobile && (
+            <DynamicParticles
+              id="tsparticles"
+              init={particlesInit}
+              options={particlesOptions}
+              className="absolute inset-0"
+            />
+          )}
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mx-4 sm:mx-6 lg:mx-8">
@@ -358,17 +385,17 @@ export default function Home() {
                     transition={{ delay: 0.3, duration: 0.8 }}
                     className="relative z-10 mb-6"
                   >
-                    <span className="text-base sm:text-lg md:text-xl text-gray-800 font-medium relative">
-                      <span className="relative">
+                    <div className="inline-block bg-white/90 backdrop-blur-lg rounded-2xl px-6 py-3 shadow-lg border border-primary/30">
+                      <span className="text-lg sm:text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight relative">
                         Mahasiswa Teknik Informatika di Universitas Islam Riau
                         <motion.div
-                          className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary/80 to-accent-purple/80"
+                          className="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-primary/80 to-accent-purple/80 rounded-full"
                           initial={{ width: "0%" }}
                           animate={{ width: "100%" }}
                           transition={{ delay: 1, duration: 0.8 }}
                         />
                       </span>
-                    </span>
+                    </div>
                   </motion.div>
 
                   <motion.div
@@ -377,16 +404,18 @@ export default function Home() {
                     transition={{ delay: 0.5, duration: 0.8 }}
                     className="relative z-10 mb-8"
                   >
-                    <p className="text-base sm:text-lg md:text-xl text-gray-800 leading-relaxed max-w-2xl mx-auto md:mx-0" id="main-content">
-                      <span className="font-bold text-gray-900">Passionate</span> dalam{" "}
-                      <span className="text-primary-700 font-bold">pengembangan aplikasi web</span>{" "}
+                    <div className="bg-white/80 backdrop-blur-md rounded-xl px-5 py-4 shadow-lg border border-gray-200 max-w-2xl mx-auto md:mx-0">
+                      <p className="text-base sm:text-lg md:text-xl text-gray-900 leading-relaxed">
+                        <span className="font-bold text-gray-900">Passionate</span> dalam{" "}
+                        <span className="text-primary-700 font-bold">pengembangan aplikasi web</span>{" "}
                         dan{" "}
-                      <span className="text-primary-700 font-bold">mobile</span> dengan fokus pada{" "}
-                      <span className="text-accent-purple font-bold">teknologi modern</span>{" "}
+                        <span className="text-primary-700 font-bold">mobile</span> dengan fokus pada{" "}
+                        <span className="text-accent-purple font-bold">teknologi modern</span>{" "}
                         dan{" "}
-                      <span className="text-accent-pink font-bold">user experience</span>.
+                        <span className="text-accent-pink font-bold">user experience</span>.
                       </p>
-                    </motion.div>
+                    </div>
+                  </motion.div>
                 
                   {/* Enhanced Social Links with Rainbow Effects */}
                   <motion.div 
@@ -477,12 +506,12 @@ export default function Home() {
                 className="flex-1 flex justify-center md:justify-end w-full md:w-1/2"
               >
                 <div className="relative w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px]">
-                  {/* Outer glow effect */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/30 via-accent-purple/30 to-accent-pink/30 blur-3xl animate-pulse-slow" />
-                  
-                  {/* Rotating border with multiple layers */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-shine animate-spin-slow" style={{ backgroundSize: '200% 200%' }}>
-                    <div className="absolute inset-1 rounded-full bg-gray-900/90 backdrop-blur-sm" />
+                  {/* Bingkai luar: gradient tebal dan glow */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary via-accent-purple to-accent-pink shadow-2xl shadow-primary/30 border-4 border-white/40 blur-[2px]" style={{ boxShadow: '0 0 60px 10px #a78bfa55, 0 0 0 8px #fff8' }} />
+
+                  {/* Bingkai gradient animasi */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-shine animate-spin-slow" style={{ backgroundSize: '200% 200%', boxShadow: '0 0 32px 8px #a78bfa33' }}>
+                    <div className="absolute inset-2 rounded-full bg-gray-900/90 backdrop-blur-sm shadow-inner shadow-primary/20" />
                   </div>
 
                   {/* Rotating geometric shapes */}
@@ -520,8 +549,8 @@ export default function Home() {
                     className="relative w-full h-full"
                   >
                     {/* Inner container with gradient border */}
-                    <div className="absolute inset-6 rounded-full p-1 bg-gradient-to-br from-primary/20 via-accent-purple/20 to-accent-pink/20 backdrop-blur-sm">
-                      <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-900/90">
+                    <div className="absolute inset-6 rounded-full p-2 bg-gradient-to-br from-primary/40 via-accent-purple/30 to-accent-pink/30 shadow-lg">
+                      <div className="relative w-full h-full rounded-full overflow-hidden bg-gray-900/90 shadow-inner shadow-primary/20">
                         {/* Image */}
                         <Image
                           src="/me.png"
@@ -529,7 +558,9 @@ export default function Home() {
                           fill
                           className="object-cover rounded-full"
                           priority
-                          sizes="(max-width: 768px) 288px, 384px"
+                          sizes="(max-width: 600px) 200px, (max-width: 1200px) 300px, 400px"
+                          loading="eager"
+                          fetchPriority="high"
                         />
 
                         {/* Overlay effects */}
@@ -537,7 +568,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-shine opacity-30" style={{ backgroundSize: '200% 200%' }} />
                         
                         {/* Inner glow */}
-                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/5 to-accent-purple/5 mix-blend-overlay" />
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary/10 to-accent-purple/10 mix-blend-overlay blur-[2px]" />
                       </div>
                     </div>
 
