@@ -341,13 +341,13 @@ export default function Home() {
           )}
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 mx-4 sm:mx-6 lg:mx-8">
+            <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-12 mx-2 sm:mx-6 lg:mx-8 py-4 md:py-0">
               {/* Enhanced Text Content */}
               <motion.div
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
-                className="flex-1 text-center md:text-left w-full md:w-1/2 relative"
+                className="flex-1 flex flex-col items-center md:items-start text-center md:text-left w-full md:w-1/2 relative gap-4 md:gap-0"
               >
                 {/* Floating Elements with Rainbow Colors */}
                 <motion.div
@@ -503,7 +503,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="flex-1 flex justify-center md:justify-end w-full md:w-1/2"
+                className="flex-1 flex justify-center md:justify-end w-full md:w-1/2 mt-8 md:mt-0 order-first md:order-none"
               >
                 <div className="relative w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px]">
                   {/* Bingkai luar: gradient tebal dan glow */}
