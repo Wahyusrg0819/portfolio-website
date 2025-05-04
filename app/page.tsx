@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useState, useEffect } from "react";
-import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
 import Typewriter from 'typewriter-effect';
@@ -320,6 +319,9 @@ export default function Home() {
 
   if (!mounted) return null;
 
+  // Helper flag untuk animasi
+  const disableMotion = isMobile;
+
   return (
     <LazyMotion features={domAnimation}>
       <div className="min-h-screen" suppressHydrationWarning>
@@ -344,9 +346,9 @@ export default function Home() {
             <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10 md:gap-12 mx-2 sm:mx-6 lg:mx-8 py-4 md:py-0">
               {/* Enhanced Text Content */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
+                initial={disableMotion ? false : { opacity: 0, x: -50 }}
+                animate={disableMotion ? false : { opacity: 1, x: 0 }}
+                transition={disableMotion ? undefined : { duration: 0.8 }}
                 className="flex-1 flex flex-col items-center md:items-start text-center md:text-left w-full md:w-1/2 relative gap-4 md:gap-0"
               >
                 {/* Floating Elements with Rainbow Colors */}
@@ -380,9 +382,9 @@ export default function Home() {
                   </h1>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3, duration: 0.8 }}
+                    initial={disableMotion ? false : { opacity: 0, y: 20 }}
+                    animate={disableMotion ? false : { opacity: 1, y: 0 }}
+                    transition={disableMotion ? undefined : { delay: 0.3, duration: 0.8 }}
                     className="relative z-10 mb-6"
                   >
                     <div className="inline-block bg-white/90 backdrop-blur-lg rounded-2xl px-6 py-3 shadow-lg border border-primary/30">
@@ -399,9 +401,9 @@ export default function Home() {
                   </motion.div>
 
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5, duration: 0.8 }}
+                    initial={disableMotion ? false : { opacity: 0, y: 20 }}
+                    animate={disableMotion ? false : { opacity: 1, y: 0 }}
+                    transition={disableMotion ? undefined : { delay: 0.5, duration: 0.8 }}
                     className="relative z-10 mb-8"
                   >
                     <div className="bg-white/80 backdrop-blur-md rounded-xl px-5 py-4 shadow-lg border border-gray-200 max-w-2xl mx-auto md:mx-0">
@@ -419,9 +421,9 @@ export default function Home() {
                 
                   {/* Enhanced Social Links with Rainbow Effects */}
                   <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7, duration: 0.8 }}
+                    initial={disableMotion ? false : { opacity: 0, y: 20 }}
+                    animate={disableMotion ? false : { opacity: 1, y: 0 }}
+                    transition={disableMotion ? undefined : { delay: 0.7, duration: 0.8 }}
                     className="flex gap-6 justify-center md:justify-start mb-8 relative z-10"
                   >
                     <motion.div 
@@ -458,9 +460,9 @@ export default function Home() {
 
                   {/* Enhanced Action Buttons with Rainbow Effects */}
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.9, duration: 0.8 }}
+                    initial={disableMotion ? false : { opacity: 0, y: 20 }}
+                    animate={disableMotion ? false : { opacity: 1, y: 0 }}
+                    transition={disableMotion ? undefined : { delay: 0.9, duration: 0.8 }}
                     className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start relative z-10"
                   >
                     <motion.div 
@@ -500,9 +502,9 @@ export default function Home() {
               
               {/* Profile Image */}
               <motion.div 
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.5, duration: 0.8 }}
+                initial={disableMotion ? false : { opacity: 0, scale: 0.5 }}
+                animate={disableMotion ? false : { opacity: 1, scale: 1 }}
+                transition={disableMotion ? undefined : { delay: 0.5, duration: 0.8 }}
                 className="flex-1 flex justify-center md:justify-end w-full md:w-1/2 mt-8 md:mt-0 order-first md:order-none"
               >
                 <div className="relative w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px] lg:w-[400px] lg:h-[400px]">
@@ -557,10 +559,10 @@ export default function Home() {
                           alt="Wahyu Muliadi Siregar"
                           fill
                           className="object-cover rounded-full"
-                          priority
                           sizes="(max-width: 600px) 200px, (max-width: 1200px) 300px, 400px"
-                          loading="eager"
-                          fetchPriority="high"
+                          priority={!isMobile}
+                          loading={isMobile ? "lazy" : "eager"}
+                          fetchPriority={isMobile ? undefined : "high"}
                         />
 
                         {/* Overlay effects */}
@@ -578,47 +580,40 @@ export default function Home() {
                   </motion.div>
 
                   {/* Floating particles with enhanced animation */}
-                  <div className="absolute inset-0">
-                    {[
-                      { left: '20%', top: '10%', delay: 0 },
-                      { left: '80%', top: '15%', delay: 0.5 },
-                      { left: '10%', top: '50%', delay: 1 },
-                      { left: '90%', top: '45%', delay: 1.5 },
-                      { left: '30%', top: '90%', delay: 2 },
-                      { left: '70%', top: '85%', delay: 2.5 }
-                    ].map((position, i) => (
-                      <motion.div
-                        key={i}
-                        className="absolute w-2 h-2 bg-primary/30 rounded-full"
-                        initial={{ scale: 0, opacity: 0 }}
-                        animate={{
-                          scale: [0, 1, 0],
-                          opacity: [0, 1, 0],
-                          y: [-20, 0, 20]
-                        }}
-                        transition={{
-                          duration: 3,
-                          repeat: Infinity,
-                          delay: position.delay,
-                          ease: "easeInOut",
-                        }}
-                        style={{
-                          left: position.left,
-                          top: position.top
-                        }}
-                      >
-                        <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  {/* Glowing orbs */}
-                  <div className="absolute -inset-4 opacity-50">
-                    <div className="absolute top-1/2 left-0 w-4 h-4 bg-primary/30 rounded-full blur-sm animate-pulse" />
-                    <div className="absolute top-1/2 right-0 w-4 h-4 bg-accent-purple/30 rounded-full blur-sm animate-pulse" />
-                    <div className="absolute top-0 left-1/2 w-4 h-4 bg-accent-pink/30 rounded-full blur-sm animate-pulse" />
-                    <div className="absolute bottom-0 left-1/2 w-4 h-4 bg-accent-blue/30 rounded-full blur-sm animate-pulse" />
-                  </div>
+                  {!isMobile && (
+                    <div className="absolute inset-0">
+                      {[{ left: '20%', top: '10%', delay: 0 },
+                        { left: '80%', top: '15%', delay: 0.5 },
+                        { left: '10%', top: '50%', delay: 1 },
+                        { left: '90%', top: '45%', delay: 1.5 },
+                        { left: '30%', top: '90%', delay: 2 },
+                        { left: '70%', top: '85%', delay: 2.5 }
+                      ].map((position, i) => (
+                        <motion.div
+                          key={i}
+                          className="absolute w-2 h-2 bg-primary/30 rounded-full"
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{
+                            scale: [0, 1, 0],
+                            opacity: [0, 1, 0],
+                            y: [-20, 0, 20]
+                          }}
+                          transition={{
+                            duration: 3,
+                            repeat: Infinity,
+                            delay: position.delay,
+                            ease: "easeInOut",
+                          }}
+                          style={{
+                            left: position.left,
+                            top: position.top
+                          }}
+                        >
+                          <div className="absolute inset-0 rounded-full bg-primary/30 animate-ping" />
+                        </motion.div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </motion.div>
             </div>

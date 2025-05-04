@@ -2,7 +2,6 @@
 
 import { motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaEnvelope, FaGithub, FaInstagram, FaMapMarkerAlt, FaWhatsapp, FaLinkedin } from "react-icons/fa";
-import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
 import { useCallback, useState, useEffect } from "react";

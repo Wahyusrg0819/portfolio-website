@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
-import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
 import { useCallback, useState, useEffect } from "react";
@@ -26,6 +25,7 @@ interface Project {
 interface ProjectCardProps {
   project: Project;
   index: number;
+  isMobile: boolean;
 }
 
 const projects = [
@@ -168,7 +168,7 @@ export default function Projects() {
             {/* Projects Grid dengan margin yang konsisten */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mx-4 sm:mx-6 lg:mx-8">
               {projects.map((project, index) => (
-                <ProjectCard key={project.title} project={project} index={index} />
+                <ProjectCard key={project.title} project={project} index={index} isMobile={isMobile} />
               ))}
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function Projects() {
   );
 }
 
-const ProjectCard = ({ project, index }: ProjectCardProps) => (
+const ProjectCard = ({ project, index, isMobile }: ProjectCardProps) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
@@ -194,9 +194,14 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => (
     <div className="relative h-48 sm:h-56 md:h-64 overflow-hidden">
       <Image
         src={project.image}
-        alt={`${project.title} Preview`}
-        fill
-        className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+        alt={project.title}
+        width={400}
+        height={300}
+        className="object-cover rounded-xl shadow-lg border border-white/20"
+        sizes="(max-width: 600px) 200px, (max-width: 1200px) 400px, 600px"
+        priority={!isMobile}
+        loading={isMobile ? "lazy" : "eager"}
+        fetchPriority={isMobile ? undefined : "high"}
       />
       {/* Overlay gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-0 

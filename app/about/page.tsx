@@ -5,7 +5,6 @@ import { motion, LazyMotion, domAnimation } from "framer-motion";
 import { FaCode, FaGraduationCap, FaBriefcase } from "react-icons/fa";
 import { FaReact } from "react-icons/fa6";
 import { SiVuedotjs } from "react-icons/si";
-import Particles from "react-particles";
 import { loadSlim } from "tsparticles-slim";
 import type { Engine } from "tsparticles-engine";
 import { useCallback, useState, useEffect } from "react";
@@ -164,41 +163,46 @@ export default function About() {
                   fill
                   className="object-cover rounded-2xl"
                   sizes="(max-width: 600px) 200px, (max-width: 1200px) 400px, 600px"
-                  priority
+                  priority={!isMobile}
+                  loading={isMobile ? "lazy" : "eager"}
+                  fetchPriority={isMobile ? undefined : "high"}
                 />
                 <div className="absolute inset-0 bg-gradient-shine opacity-30" 
                      style={{ backgroundSize: '200% 200%' }} />
                 
                 {/* Fixed position particles */}
-                {[...Array(6)].map((_, i) => {
-                  const positions = [
-                    { left: '20%', top: '20%' },
-                    { left: '80%', top: '20%' },
-                    { left: '20%', top: '80%' },
-                    { left: '80%', top: '80%' },
-                    { left: '50%', top: '10%' },
-                    { left: '50%', top: '90%' },
-                  ];
-
-                  return (
-                    <motion.div
-                      key={i}
-                      className="absolute w-2 h-2 bg-primary/30 rounded-full"
-                      initial={{ scale: 0 }}
-                      animate={{
-                        scale: [0, 1, 0],
-                        y: [0, -10, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        delay: i * 0.4,
-                        ease: "easeInOut",
-                      }}
-                      style={positions[i]}
-                    />
-                  );
-                })}
+                {!isMobile && (
+                  <>
+                    {[...Array(6)].map((_, i) => {
+                      const positions = [
+                        { left: '20%', top: '20%' },
+                        { left: '80%', top: '20%' },
+                        { left: '20%', top: '80%' },
+                        { left: '80%', top: '80%' },
+                        { left: '50%', top: '10%' },
+                        { left: '50%', top: '90%' },
+                      ];
+                      return (
+                        <motion.div
+                          key={i}
+                          className="absolute w-2 h-2 bg-primary/30 rounded-full"
+                          initial={{ scale: 0 }}
+                          animate={{
+                            scale: [0, 1, 0],
+                            y: [0, -10, 0],
+                          }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            delay: i * 0.4,
+                            ease: "easeInOut",
+                          }}
+                          style={positions[i]}
+                        />
+                      );
+                    })}
+                  </>
+                )}
               </motion.div>
             </div>
           </div>
